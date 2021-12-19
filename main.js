@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow } from 'electron'
-import { join } from 'path'
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
 function createWindow() {
     // Create the browser window.
@@ -12,7 +12,7 @@ function createWindow() {
         fullscreenable: false,
         frame: false,
         webPreferences: {
-            preload: join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js')
         }
     })
 
