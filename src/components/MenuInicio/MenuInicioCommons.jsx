@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 
 export const LinkCard = styled(Link)`
     text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
     display:flex;
+    width: fit-content;
+    height: fit-content;
 `;
 
 export const Grid = styled.div`
