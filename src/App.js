@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import { Fragment } from 'react/cjs/react.production.min';
 import './App.css';
+import Menu2 from "./components/Menu2/Menu2";
 import MenuInicio from './components/MenuInicio/MenuInicio';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Fragment>
       <Router>
         <Routes>
+          <Route exact path="/menu2" element={<Menu2 />} />
           <Route exact path="/" element={<MenuInicio/>}/>
         </Routes>
       </Router>
