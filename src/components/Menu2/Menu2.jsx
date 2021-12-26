@@ -1,5 +1,6 @@
 import React from "react";
-import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, IconHelp, LabelCard, NumberInput, TextInput } from "./Menu2Commons";
+import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, NumberInput, TextInput, TitleCard } from "./Menu2Commons";
+import {BiHelpCircle} from "react-icons/bi";
 const Menu2 = () => {
     return ( 
         <GridMenu2>
@@ -20,7 +21,10 @@ const Menu2 = () => {
                 <ButtonBack>Volver</ButtonBack>
             </CardInputs>
             <HelpCard>
-                <IconHelp></IconHelp>
+                <IconHelp><BiHelpCircle/></IconHelp>
+                <HelpContent>
+                    <TitleCard>Nombre del problema</TitleCard>
+                </HelpContent>
             </HelpCard>
         </GridMenu2>
     );

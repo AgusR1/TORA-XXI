@@ -92,10 +92,26 @@ export const IconHelp = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4em;
+    font-size: 5em;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     clip-path: polygon(0 0, 100% 0%, 70% 100%, 0 100%);
     box-shadow: 8px 0px 8px 0px rgba(0, 0, 0, 0.46);
+`;
+
+export const HelpContent = styled.div`
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows:30% 70%;
+`;
+
+export const TitleCard = styled.h5`
+    color:white;
+    font-family:'Abel';
+    font-size:2em;
+    margin-block-start: 0px;
+    margin-block-end:0px;
+    display: flex;
+    align-items:center;
 `;
 
