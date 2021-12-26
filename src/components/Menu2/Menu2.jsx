@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, LabelCard, NumberInput, TextInput } from "./Menu2Commons";
+import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, IconHelp, LabelCard, NumberInput, TextInput } from "./Menu2Commons";
 const Menu2 = () => {
     return ( 
         <GridMenu2>
@@ -19,6 +19,9 @@ const Menu2 = () => {
                 <ButtonAccept>Aceptar</ButtonAccept>
                 <ButtonBack>Volver</ButtonBack>
             </CardInputs>
+            <HelpCard>
+                <IconHelp></IconHelp>
+            </HelpCard>
         </GridMenu2>
     );
 }
