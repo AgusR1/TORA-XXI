@@ -81,7 +81,6 @@ export const HelpCard =styled(motion.div)`
     grid-template-columns: 30% 70%;
     grid-template-rows:100%;
     background: #8593FF;
-    padding: 2em;
     width: 500px;
     height: 200px;
     border-radius:5px;
@@ -91,12 +90,12 @@ export const IconHelp = styled.div`
     background:#475DFF;
     color: white;
     display: flex;
-    align - items: center;
-    justify - content: center;
-    font - size: 4em;
-    border - top - left - radius: 5px;
-    border - bottom - left - radius: 5px;
-    clip - path: polygon(0 0, 100 % 0 %, 70 % 100 %, 0 100 %);
-    box - shadow: 8px 0px 8px 0px rgba(0, 0, 0, 0.46);
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    clip-path: polygon(0 0, 100% 0%, 70% 100%, 0 100%);
+    box-shadow: 8px 0px 8px 0px rgba(0, 0, 0, 0.46);
 `;
 
