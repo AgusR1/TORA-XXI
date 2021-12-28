@@ -113,5 +113,11 @@ export const TitleCard = styled.h5`
     margin-block-end:0px;
     display: flex;
     align-items:center;
+    margin-left:auto;
+    margin-right: auto;
+`;
+
+export const TextCard = styled.p`
+
 `;
 
