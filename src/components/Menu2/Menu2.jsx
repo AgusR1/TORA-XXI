@@ -37,7 +37,7 @@ const Menu2 = () => {
                     <IconHelp><BiHelpCircle /></IconHelp>
                     <HelpContent>
                         <TitleCard>Fuentes</TitleCard>
-                        <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
+                        <TextCard>Punto de partida de los recursos.</TextCard>
                     </HelpContent>
                 </HelpCard>
             }
@@ -47,7 +47,7 @@ const Menu2 = () => {
                     <IconHelp><BiHelpCircle /></IconHelp>
                     <HelpContent>
                         <TitleCard>Destinos</TitleCard>
-                        <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
+                        <TextCard>Estos son los puntos a los que los recursos deeben llegar desde las fuentes.</TextCard>
                     </HelpContent>
                 </HelpCard>
             }
