@@ -118,6 +118,13 @@ export const TitleCard = styled.h5`
 `;
 
 export const TextCard = styled.p`
-
+    color:white;
+    font-family:'Abel';
+    font-size:1.2em;
+    padding:2em;
+    margin-block-start: 0px;
+    margin-block-end:0px;
+    display: flex;
+    text-align: center;
 `;
 

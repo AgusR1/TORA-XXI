@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, NumberInput, TextInput, TitleCard } from "./Menu2Commons";
+import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
 import {BiHelpCircle} from "react-icons/bi";
 const Menu2 = () => {
     return ( 
@@ -24,6 +24,7 @@ const Menu2 = () => {
                 <IconHelp><BiHelpCircle/></IconHelp>
                 <HelpContent>
                     <TitleCard>Nombre del problema</TitleCard>
+                    <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
                 </HelpContent>
             </HelpCard>
         </GridMenu2>
