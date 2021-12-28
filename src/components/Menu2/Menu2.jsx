@@ -1,32 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
 import {BiHelpCircle} from "react-icons/bi";
 const Menu2 = () => {
+    const [input,setInput]=useState("nombre");
     return ( 
         <GridMenu2>
             <CardInputs>
                 <DivInput>
                     <LabelCard>Nombre del problema</LabelCard>
-                    <TextInput placeholder="Nombre del problema" type="text"/>
+                    <TextInput onClick={()=>{setInput("nombre")}} placeholder="Nombre del problema" type="text"/>
                 </DivInput>
                 <DivInput>
                     <LabelCard>Número de fuentes</LabelCard>
-                    <NumberInput placeholder="Número de fuentes" type="number" />
+                    <NumberInput onClick={() => { setInput("fuentes") }} placeholder="Número de fuentes" type="number" />
                 </DivInput>
                 <DivInput>
                     <LabelCard>Número del destinos</LabelCard>
-                    <NumberInput placeholder="Número del destinos" type="number"/>
+                    <NumberInput onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="number"/>
                 </DivInput>
                 <ButtonAccept>Aceptar</ButtonAccept>
                 <ButtonBack>Volver</ButtonBack>
             </CardInputs>
-            <HelpCard>
-                <IconHelp><BiHelpCircle/></IconHelp>
-                <HelpContent>
-                    <TitleCard>Nombre del problema</TitleCard>
-                    <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
-                </HelpContent>
-            </HelpCard>
+            {
+                input==="nombre" &&
+                <HelpCard initial={{x:1000}} animate={{x:0}}>
+                    <IconHelp><BiHelpCircle /></IconHelp>
+                    <HelpContent>
+                        <TitleCard>Nombre del problema</TitleCard>
+                        <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
+                    </HelpContent>
+                </HelpCard>
+            }
+            {
+                input === "fuentes" &&
+                <HelpCard initial={{ x: 1000 }} animate={{ x: 0 }}>
+                    <IconHelp><BiHelpCircle /></IconHelp>
+                    <HelpContent>
+                        <TitleCard>Fuentes</TitleCard>
+                        <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
+                    </HelpContent>
+                </HelpCard>
+            }
+            {
+                input === "destinos" &&
+                <HelpCard initial={{ x: 1000 }} animate={{ x: 0 }}>
+                    <IconHelp><BiHelpCircle /></IconHelp>
+                    <HelpContent>
+                        <TitleCard>Destinos</TitleCard>
+                        <TextCard>Este es el nombre con el cual identificaras este fichero.</TextCard>
+                    </HelpContent>
+                </HelpCard>
+            }
         </GridMenu2>
     );
 }
