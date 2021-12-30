@@ -9,27 +9,34 @@ const Menu2 = () => {
     return (
         <GridMenu2>
             <CardInputs>
-                <form action="" onSubmit={onSubmit}>
+                <form onSubmit={onSubmit}>
                     <DivInput>
-                        <LabelCard>Nombre del problema</LabelCard>
+                        <LabelCard htmlFor="nombreProblema">Nombre del problema</LabelCard>
                         <TextInput
+                            id="nombreProblema"
+                            name="nombreProblema"
                             onClick={() => { setInput("nombre") }}
                             placeholder="Nombre del problema"
                             type="text" />
                     </DivInput>
                     <DivInput>
-                        <LabelCard>Número de fuentes</LabelCard>
+                        <LabelCard htmlFor="numeroFuentes">Número de fuentes</LabelCard>
                         <NumberInput
+                            id="numeroFuentes"
+                            name="numeroFuentes"
                             onClick={() => { setInput("fuentes") }}
                             placeholder="Número de fuentes"
                             type="number" />
                     </DivInput>
                     <DivInput>
-                        <LabelCard>Número del destinos</LabelCard>
+                        <LabelCard htmlFor="numeroDestinos" >Número del destinos</LabelCard>
                         <NumberInput
+                            id="numeroDestinos"
+                            name="numeroDestinos"
                             onClick={() => { setInput("destinos") }}
                             placeholder="Número del destinos"
-                            type="number" />
+                            type="number" 
+                            />
                     </DivInput>
                     <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
                     <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
