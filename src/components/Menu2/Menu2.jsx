@@ -12,11 +12,11 @@ const Menu2 = () => {
                 </DivInput>
                 <DivInput>
                     <LabelCard>Número de fuentes</LabelCard>
-                    <NumberInput onClick={() => { setInput("fuentes") }} placeholder="Número de fuentes" type="number" />
+                    <NumberInput onClick={() => { setInput("fuentes") }} placeholder="Número de fuentes" type="text" />
                 </DivInput>
                 <DivInput>
                     <LabelCard>Número del destinos</LabelCard>
-                    <NumberInput onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="number"/>
+                    <NumberInput onkeyup="if(this.value<0){this.value= this.value * -1}" min="0" step="1" onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="text"/>
                 </DivInput>
                 <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
                 <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
