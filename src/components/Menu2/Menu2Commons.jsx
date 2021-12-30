@@ -67,6 +67,9 @@ export const ButtonAccept = styled(ButtonCard)`
     color:white;
     font-family: 'Abel';
     font-size:2em;
+    &:hover{
+        background:  #1a34ff;
+    }
 `;
 
 export const ButtonBack = styled(ButtonCard)`
@@ -74,6 +77,10 @@ export const ButtonBack = styled(ButtonCard)`
     color:black;
     font-family: 'Abel';
     font-size:2em;
+    &:hover{
+        background:  black;
+        color:white;
+    }
 `;
 
 export const HelpCard =styled(motion.div)`

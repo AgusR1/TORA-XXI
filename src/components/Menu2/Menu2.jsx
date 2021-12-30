@@ -18,8 +18,8 @@ const Menu2 = () => {
                     <LabelCard>Número del destinos</LabelCard>
                     <NumberInput onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="number"/>
                 </DivInput>
-                <ButtonAccept>Aceptar</ButtonAccept>
-                <ButtonBack>Volver</ButtonBack>
+                <ButtonAccept whileHover={{scale:1.09}}>Aceptar</ButtonAccept>
+                <ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack>
             </CardInputs>
             {
                 input==="nombre" &&
