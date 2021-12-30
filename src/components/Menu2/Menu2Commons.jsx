@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export const GridMenu2 = styled.div`
     display:grid;
@@ -62,11 +63,20 @@ export const ButtonCard = styled(motion.button)`
     border:none;
 `;
 
+export const LinkOption = styled(Link)`
+    text-decoration: none;
+    display:flex;
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
+`;
+
 export const ButtonAccept = styled(ButtonCard)`
     background: #475DFF;
     color:white;
     font-family: 'Abel';
     font-size:2em;
+    width: 100%;
     &:hover{
         background:  #1a34ff;
     }
@@ -77,6 +87,7 @@ export const ButtonBack = styled(ButtonCard)`
     color:black;
     font-family: 'Abel';
     font-size:2em;
+    width: 100%;
     &:hover{
         background:  black;
         color:white;

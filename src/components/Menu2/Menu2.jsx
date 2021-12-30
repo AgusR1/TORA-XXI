@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
+import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, LinkOption, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
 import {BiHelpCircle} from "react-icons/bi";
 const Menu2 = () => {
     const [input,setInput]=useState("nombre");
@@ -18,8 +18,8 @@ const Menu2 = () => {
                     <LabelCard>Número del destinos</LabelCard>
                     <NumberInput onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="number"/>
                 </DivInput>
-                <ButtonAccept whileHover={{scale:1.09}}>Aceptar</ButtonAccept>
-                <ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack>
+                <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
+                <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
             </CardInputs>
             {
                 input==="nombre" &&
