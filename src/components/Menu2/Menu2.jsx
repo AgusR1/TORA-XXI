@@ -1,29 +1,43 @@
 import React, { useState } from "react";
 import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, LinkOption, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
-import {BiHelpCircle} from "react-icons/bi";
+import { BiHelpCircle } from "react-icons/bi";
 const Menu2 = () => {
-    const [input,setInput]=useState("nombre");
-    return ( 
+    const [input, setInput] = useState("nombre");
+    const onSubmit = (e) => {
+        e.preventDefault();
+    }
+    return (
         <GridMenu2>
             <CardInputs>
-                <DivInput>
-                    <LabelCard>Nombre del problema</LabelCard>
-                    <TextInput onClick={()=>{setInput("nombre")}} placeholder="Nombre del problema" type="text"/>
-                </DivInput>
-                <DivInput>
-                    <LabelCard>Número de fuentes</LabelCard>
-                    <NumberInput onClick={() => { setInput("fuentes") }} placeholder="Número de fuentes" type="text" />
-                </DivInput>
-                <DivInput>
-                    <LabelCard>Número del destinos</LabelCard>
-                    <NumberInput onkeyup="if(this.value<0){this.value= this.value * -1}" min="0" step="1" onClick={() => { setInput("destinos") }} placeholder="Número del destinos" type="text"/>
-                </DivInput>
-                <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
-                <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
+                <form action="" onSubmit={onSubmit}>
+                    <DivInput>
+                        <LabelCard>Nombre del problema</LabelCard>
+                        <TextInput
+                            onClick={() => { setInput("nombre") }}
+                            placeholder="Nombre del problema"
+                            type="text" />
+                    </DivInput>
+                    <DivInput>
+                        <LabelCard>Número de fuentes</LabelCard>
+                        <NumberInput
+                            onClick={() => { setInput("fuentes") }}
+                            placeholder="Número de fuentes"
+                            type="number" />
+                    </DivInput>
+                    <DivInput>
+                        <LabelCard>Número del destinos</LabelCard>
+                        <NumberInput
+                            onClick={() => { setInput("destinos") }}
+                            placeholder="Número del destinos"
+                            type="number" />
+                    </DivInput>
+                    <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
+                    <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
+                </form>
             </CardInputs>
             {
-                input==="nombre" &&
-                <HelpCard initial={{x:1000}} animate={{x:0}}>
+                input === "nombre" &&
+                <HelpCard initial={{ x: 1000 }} animate={{ x: 0 }}>
                     <IconHelp><BiHelpCircle /></IconHelp>
                     <HelpContent>
                         <TitleCard>Nombre del problema</TitleCard>
@@ -54,5 +68,5 @@ const Menu2 = () => {
         </GridMenu2>
     );
 }
- 
+
 export default Menu2;
