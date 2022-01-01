@@ -16,10 +16,25 @@ const Menu2 = () => {
                     }}
                     validate={(valores)=>{
                         let errores={};
-                        if(!valores.nombreProblema){
-                            errores.nombrseProblema='Debes ingresar un nombre';
-                        } else if (!/^[a-zA-Z]{1,20}$/.test(valores.nombre)){
-                            errores.nombreProblema=""
+                        const expresionNombre = /^[a-zA-Z0-9_]{1,30}$/;
+                        const expresionNumeros = /\b([1-9]|10)\b/;
+                        if (!valores.nombreProblema) {
+                            errores.nombreProblema = 'Este campo debe estar completo';
+                        }else if (!expresionNombre.test(valores.nombreProblema)){
+                            errores.nombreProblema ='Solo se permiten letras, numeros y el caracter "_"';
+                            if(valores.nombreProblema.length>30){
+                                errores.nombreProblema='La longitud debe ser menor a 30';
+                            }
+                        }
+                        if(!valores.n){
+                            errores.n='Este campo no puede quedar vacio';
+                        }else if(!expresionNumeros.test(valores.n)){
+                            errores.n='Solo se permiten enteros de 1 a 10';
+                        }
+                        if (!valores.m) {
+                            errores.m = 'Este campo no puede quedar vacio';
+                        } else if (!expresionNumeros.test(valores.m)) {
+                            errores.m = 'Solo se permiten enteros de 1 a 10';
                         }
                         return errores;
                     }}
@@ -49,7 +64,8 @@ const Menu2 = () => {
                                     values={props.values.n}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    type="number" />
+                                    type="text" />
+                                {props.errors.n && <ErrorText>{props.errors.n}</ErrorText>}
                             </DivInput>
                             <DivInput>
                                 <LabelCard htmlFor="numeroDestinos" >Número del destinos</LabelCard>
@@ -61,8 +77,9 @@ const Menu2 = () => {
                                     values={props.values.m}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    type="number"
+                                    type="text"
                                 />
+                                {props.errors.m && <ErrorText>{props.errors.m}</ErrorText>}
                             </DivInput>
                             <LinkOption disabled={validStatus} to="/menuProblema"><ButtonAccept  type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
                             <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
