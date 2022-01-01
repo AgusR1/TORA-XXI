@@ -146,3 +146,15 @@ export const TextCard = styled.p`
     text-align: center;
 `;
 
+export const ErrorText = styled.p`
+    color:#1a34ff;
+    font-family:'Abel';
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-block-start: 0px;
+    margin-block-end:0px;
+    display: flex;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+`;

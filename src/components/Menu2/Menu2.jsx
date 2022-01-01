@@ -1,46 +1,74 @@
 import React, { useState } from "react";
-import { ButtonAccept, ButtonBack, CardInputs, DivInput, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, LinkOption, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
+import { ButtonAccept, ButtonBack, CardInputs, DivInput, ErrorText, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, LinkOption, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
 import { BiHelpCircle } from "react-icons/bi";
+import { Formik } from "formik";
 const Menu2 = () => {
     const [input, setInput] = useState("nombre");
-    const onSubmit = (e) => {
-        e.preventDefault();
-    }
+    const [validStatus, setValidStatus]=useState(true);
     return (
         <GridMenu2>
             <CardInputs>
-                <form onSubmit={onSubmit}>
-                    <DivInput>
-                        <LabelCard htmlFor="nombreProblema">Nombre del problema</LabelCard>
-                        <TextInput
-                            id="nombreProblema"
-                            name="nombreProblema"
-                            onClick={() => { setInput("nombre") }}
-                            placeholder="Nombre del problema"
-                            type="text" />
-                    </DivInput>
-                    <DivInput>
-                        <LabelCard htmlFor="numeroFuentes">Número de fuentes</LabelCard>
-                        <NumberInput
-                            id="numeroFuentes"
-                            name="numeroFuentes"
-                            onClick={() => { setInput("fuentes") }}
-                            placeholder="Número de fuentes"
-                            type="number" />
-                    </DivInput>
-                    <DivInput>
-                        <LabelCard htmlFor="numeroDestinos" >Número del destinos</LabelCard>
-                        <NumberInput
-                            id="numeroDestinos"
-                            name="numeroDestinos"
-                            onClick={() => { setInput("destinos") }}
-                            placeholder="Número del destinos"
-                            type="number" 
-                            />
-                    </DivInput>
-                    <LinkOption to="/menuProblema"><ButtonAccept whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
-                    <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
-                </form>
+                <Formik
+                    initialValues={{
+                        nombreProblema:'',
+                        n:'',
+                        m:''
+                    }}
+                    validate={(valores)=>{
+                        let errores={};
+                        if(!valores.nombreProblema){
+                            errores.nombrseProblema='Debes ingresar un nombre';
+                        } else if (!/^[a-zA-Z]{1,20}$/.test(valores.nombre)){
+                            errores.nombreProblema=""
+                        }
+                        return errores;
+                    }}
+                >
+                    {(props)=>(
+                        <form onSubmit={props.handleSubmit}>
+                            <DivInput>
+                                <LabelCard htmlFor="nombreProblema">Nombre del problema</LabelCard>
+                                <TextInput
+                                    id="nombreProblema"
+                                    name="nombreProblema"
+                                    onClick={() => { setInput("nombre") }}
+                                    placeholder="Nombre del problema"
+                                    values={props.values.nombreProblema}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    type="text" />
+                                {props.errors.nombreProblema && <ErrorText>{props.errors.nombreProblema}</ErrorText>}
+                            </DivInput>
+                            <DivInput>
+                                <LabelCard htmlFor="numeroFuentes">Número de fuentes</LabelCard>
+                                <NumberInput
+                                    id="numeroFuentes"
+                                    name="numeroFuentes"
+                                    onClick={() => { setInput("fuentes") }}
+                                    placeholder="Número de fuentes"
+                                    values={props.values.n}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    type="number" />
+                            </DivInput>
+                            <DivInput>
+                                <LabelCard htmlFor="numeroDestinos" >Número del destinos</LabelCard>
+                                <NumberInput
+                                    id="numeroDestinos"
+                                    name="numeroDestinos"
+                                    onClick={() => { setInput("destinos") }}
+                                    placeholder="Número del destinos"
+                                    values={props.values.m}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                    type="number"
+                                />
+                            </DivInput>
+                            <LinkOption disabled={validStatus} to="/menuProblema"><ButtonAccept  type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
+                            <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
+                        </form>
+                    )}  
+                </Formik>
             </CardInputs>
             {
                 input === "nombre" &&
