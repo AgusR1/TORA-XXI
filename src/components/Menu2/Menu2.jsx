@@ -41,7 +41,6 @@ const Menu2 = () => {
                 >
                     {(props)=>(
                         <form onSubmit={props.handleSubmit}>
-                            {console.log(props.touched)}
                             <DivInput>
                                 <LabelCard htmlFor="nombreProblema">Nombre del problema</LabelCard>
                                 <TextInput
@@ -82,7 +81,7 @@ const Menu2 = () => {
                                 />
                                 {props.touched.numeroDestinos && props.errors.numeroDestinos && <ErrorText>{props.errors.numeroDestinos}</ErrorText>}
                             </DivInput>
-                            <LinkOption disabled={validStatus} to="/menuProblema"><ButtonAccept  type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
+                            <LinkOption to="/menuProblema"><ButtonAccept disabled={validStatus} type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
                             <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
                         </form>
                     )}  

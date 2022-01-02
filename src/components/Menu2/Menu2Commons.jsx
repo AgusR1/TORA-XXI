@@ -9,6 +9,9 @@ export const GridMenu2 = styled.div`
     height: 100vh;
     justify-items: center;
     align-items: center;
+    @media screen and (max-width:1024px){
+        grid-template-rows:100%;
+    }
 `;
 
 export const CardInputs = styled(motion.div)`
@@ -20,6 +23,10 @@ export const CardInputs = styled(motion.div)`
     width: 500px;
     height: 550px;
     border-radius:5px;
+    @media screen and (max-width:1024px){
+        width: 400px;
+        height: 450px;
+    }
 `;
 
 export const DivInput = styled.div`
@@ -27,6 +34,9 @@ export const DivInput = styled.div`
     grid-template-columns: auto;
     grid-template-rows: repeat(2,1fr);
     padding:1em;
+    @media screen and (max-width:1024px){
+        padding: 0.1em;
+    }
 `;
 
 export const LabelCard = styled.label`
@@ -69,6 +79,8 @@ export const LinkOption = styled(Link)`
     margin-left:auto;
     margin-right:auto;
     width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
 `;
 
 export const ButtonAccept = styled(ButtonCard)`
@@ -102,6 +114,10 @@ export const HelpCard =styled(motion.div)`
     width: 500px;
     height: 200px;
     border-radius:5px;
+    @media screen and (max-width:1024px){
+        width: 400px;
+        height: 250px;
+    }
 `;
 
 export const IconHelp = styled.div`
