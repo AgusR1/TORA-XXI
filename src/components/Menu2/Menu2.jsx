@@ -11,8 +11,8 @@ const Menu2 = () => {
                 <Formik
                     initialValues={{
                         nombreProblema:'',
-                        n:'',
-                        m:''
+                        numeroDestinos:'',
+                        numeroFuentes:''
                     }}
                     validate={(valores)=>{
                         let errores={};
@@ -26,21 +26,22 @@ const Menu2 = () => {
                                 errores.nombreProblema='La longitud debe ser menor a 30';
                             }
                         }
-                        if(!valores.n){
-                            errores.n='Este campo no puede quedar vacio';
-                        }else if(!expresionNumeros.test(valores.n)){
-                            errores.n='Solo se permiten enteros de 1 a 10';
+                        if(!valores.numeroFuentes){
+                            errores.numeroFuentes='Este campo no puede quedar vacio';
+                        }else if(!expresionNumeros.test(valores.numeroFuentes)){
+                            errores.numeroFuentes='Solo se permiten enteros de 1 a 10';
                         }
-                        if (!valores.m) {
-                            errores.m = 'Este campo no puede quedar vacio';
-                        } else if (!expresionNumeros.test(valores.m)) {
-                            errores.m = 'Solo se permiten enteros de 1 a 10';
+                        if (!valores.numeroDestinos) {
+                            errores.numeroDestinos = 'Este campo no puede quedar vacio';
+                        } else if (!expresionNumeros.test(valores.numeroDestinos)) {
+                            errores.numeroDestinos = 'Solo se permiten enteros de 1 a 10';
                         }
                         return errores;
                     }}
                 >
                     {(props)=>(
                         <form onSubmit={props.handleSubmit}>
+                            {console.log(props.touched)}
                             <DivInput>
                                 <LabelCard htmlFor="nombreProblema">Nombre del problema</LabelCard>
                                 <TextInput
@@ -52,7 +53,7 @@ const Menu2 = () => {
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                     type="text" />
-                                {props.errors.nombreProblema && <ErrorText>{props.errors.nombreProblema}</ErrorText>}
+                                {props.touched.nombreProblema && props.errors.nombreProblema && <ErrorText>{props.errors.nombreProblema}</ErrorText>}
                             </DivInput>
                             <DivInput>
                                 <LabelCard htmlFor="numeroFuentes">Número de fuentes</LabelCard>
@@ -61,11 +62,11 @@ const Menu2 = () => {
                                     name="numeroFuentes"
                                     onClick={() => { setInput("fuentes") }}
                                     placeholder="Número de fuentes"
-                                    values={props.values.n}
+                                    values={props.values.numeroFuentes}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                     type="text" />
-                                {props.errors.n && <ErrorText>{props.errors.n}</ErrorText>}
+                                {props.touched.numeroFuentes && props.errors.numeroFuentes && <ErrorText>{props.errors.numeroFuentes}</ErrorText>}
                             </DivInput>
                             <DivInput>
                                 <LabelCard htmlFor="numeroDestinos" >Número del destinos</LabelCard>
@@ -74,12 +75,12 @@ const Menu2 = () => {
                                     name="numeroDestinos"
                                     onClick={() => { setInput("destinos") }}
                                     placeholder="Número del destinos"
-                                    values={props.values.m}
+                                    values={props.values.numeroDestinos}
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                     type="text"
                                 />
-                                {props.errors.m && <ErrorText>{props.errors.m}</ErrorText>}
+                                {props.touched.numeroDestinos && props.errors.numeroDestinos && <ErrorText>{props.errors.numeroDestinos}</ErrorText>}
                             </DivInput>
                             <LinkOption disabled={validStatus} to="/menuProblema"><ButtonAccept  type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
                             <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
