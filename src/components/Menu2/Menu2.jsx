@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { ButtonAccept, ButtonBack, CardInputs, DivInput, ErrorText, GridMenu2, HelpCard, HelpContent, IconHelp, LabelCard, LinkOption, NumberInput, TextCard, TextInput, TitleCard } from "./Menu2Commons";
 import { BiHelpCircle } from "react-icons/bi";
 import { Formik } from "formik";
+import { useNavigate } from "react-router";
 const Menu2 = () => {
     const [input, setInput] = useState("nombre");
-    const [validStatus, setValidStatus]=useState(true);
+    const [problema,setProblema]=useState({});
+    const navigate=useNavigate();
     return (
         <GridMenu2>
             <CardInputs>
@@ -37,6 +39,10 @@ const Menu2 = () => {
                             errores.numeroDestinos = 'Solo se permiten enteros de 1 a 10';
                         }
                         return errores;
+                    }}
+                    onSubmit={values => {
+                        setProblema({...problema,values})
+                        navigate('/menuProblema');
                     }}
                 >
                     {(props)=>(
@@ -81,7 +87,7 @@ const Menu2 = () => {
                                 />
                                 {props.touched.numeroDestinos && props.errors.numeroDestinos && <ErrorText>{props.errors.numeroDestinos}</ErrorText>}
                             </DivInput>
-                            <LinkOption to="/menuProblema"><ButtonAccept disabled={validStatus} type="button" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept></LinkOption>
+                            <ButtonAccept type="submit" whileHover={{ scale: 1.09 }}>Aceptar</ButtonAccept>
                             <LinkOption to="/"><ButtonBack whileHover={{ scale: 1.09 }}>Volver</ButtonBack></LinkOption>
                         </form>
                     )}  

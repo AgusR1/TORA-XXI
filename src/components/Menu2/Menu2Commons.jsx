@@ -88,7 +88,13 @@ export const ButtonAccept = styled(ButtonCard)`
     color:white;
     font-family: 'Abel';
     font-size:2em;
-    width: 100%;
+    width: 87%;
+    display: flex;
+    margin-left: auto;
+    margin-right:auto;
+    margin-top:0;
+    margin-bottom:0;
+    justify-content: center;
     &:hover{
         background:  #1a34ff;
     }
