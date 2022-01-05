@@ -1,11 +1,15 @@
-import react from "react";
-import { Fragment } from "react/cjs/react.production.min";
+import React, { Fragment } from "react";
+import useData from "../hooks/useData";
+import { GridMenuProblema, TitleProblem } from "./menuProblemaCommons";
 
 const MenuProblema = () => {
-    return ( 
+    const data = useData();
+    return(
         <Fragment>
-            <h1>Hola mundo</h1>
-        </Fragment> 
+            <GridMenuProblema>
+                <TitleProblem>{data.nombreProblema}</TitleProblem>
+            </GridMenuProblema>       
+        </Fragment>
     );
 }
  

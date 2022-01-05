@@ -3,10 +3,11 @@ import { ButtonAccept, ButtonBack, CardInputs, DivInput, ErrorText, GridMenu2, H
 import { BiHelpCircle } from "react-icons/bi";
 import { Formik } from "formik";
 import { useNavigate } from "react-router";
+import useData from "../hooks/useData";
 const Menu2 = () => {
     const [input, setInput] = useState("nombre");
-    const [problema,setProblema]=useState({});
     const navigate=useNavigate();
+    const data=useData();
     return (
         <GridMenu2>
             <CardInputs>
@@ -41,7 +42,9 @@ const Menu2 = () => {
                         return errores;
                     }}
                     onSubmit={values => {
-                        setProblema({...problema,values});
+                        data.nombreProblema=values.nombreProblema;
+                        data.destinos=parseInt(values.numeroDestinos);
+                        data.fuentes=parseInt(values.numeroFuentes);
                         navigate('/menuProblema');
                     }}
                 >

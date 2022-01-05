@@ -19,9 +19,9 @@ function App() {
     <DataContext.Provider value={dataProblema}>
       <Router>
         <Routes>
-          <Route exact path="/menuProblema" element={<MenuProblema />} />
-          <Route exact path="/menu2" element={<Menu2 />} />
-          <Route exact path="/" element={<MenuInicio />} />
+          <Route exact path="/menuProblema" element={<MenuProblema/>} />
+          <Route exact path="/menu2" element={<Menu2/>} />
+          <Route exact path="/" element={<MenuInicio/>} />
         </Routes>
       </Router>
     </DataContext.Provider>
