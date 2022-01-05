@@ -3,7 +3,6 @@ import { ButtonAccept, ButtonBack, CardInputs, DivInput, ErrorText, GridMenu2, H
 import { BiHelpCircle } from "react-icons/bi";
 import { Formik } from "formik";
 import { useNavigate } from "react-router";
-import { ContextProblema } from "./context";
 const Menu2 = () => {
     const [input, setInput] = useState("nombre");
     const [problema,setProblema]=useState({});
