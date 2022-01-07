@@ -19,3 +19,14 @@ export const GridMenuProblema = styled.div`
     grid-template-columns: 100vw;
     grid-template-rows: 30vh 70vh;
 `;
+
+export const CardTable = styled(motion.div)`
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.4em;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 4px;
+    background: white;
+    border: 2px;
+`;
