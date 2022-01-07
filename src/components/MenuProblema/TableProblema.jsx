@@ -1,3 +1,4 @@
+import { Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 
@@ -49,17 +50,67 @@ export const Ith = styled(Td)`
     font-family: 'Abel';
     cursor:pointer;
 `;
+export const InputTexto = styled.input`
+    width: 30px;
+    border:none;
+    background:#ADB7FF;
+    cursor:pointer;
+    color:white;
+    font-family: 'Abel';
+`;
+
+export const InputTexto2 = styled.input`
+    width: 30px;
+    border:none;
+    background:#e6e8ff;
+    cursor:pointer;
+    font-family: 'Abel';
+`;
+
+export const InputNumber = styled.input`
+    width: 30px;
+    border:none;
+    background:white;
+    cursor:pointer;
+    font-family: 'Abel';
+`;
+
+export const InputNumber2 = styled.input`
+    width: 30px;
+    border:none;
+    background:#ADB7FF;
+    cursor:pointer;
+    font-family: 'Abel';
+    color:white;
+`;
+
+export const InputNumber3 = styled.input`
+    width: 30px;
+    border:none;
+    background:#e6e8ff;
+    cursor:pointer;
+    font-family: 'Abel';
+`;
 
 const TableProblema = ({ data }) => {
+    const min = 1;
+    const max = 10000;
     return (
         <Table>
             <thead>
                 <tr>
                     <ThFD>Fuentes/Destinos</ThFD>
                     {
-                        [...Array(data.destinos)].map((e,index) => {
+                        [...Array(data.destinos)].map((e, index) => {
                             return (
-                                <Sth>Destino {index + 1}</Sth>
+                                <Sth key={Math.floor(Math.random() * (max - min + 1)) + min}>
+                                    <InputTexto
+                                        key={Math.floor(Math.random() * (max - min + 1)) + min}
+                                        id={"destino" + index}
+                                        name={"destino" + index}
+                                        type="text"
+                                    />
+                                </Sth>
                             )
                         })
                     }
@@ -70,9 +121,9 @@ const TableProblema = ({ data }) => {
                 <tr>
                     <ThFD>Demanda</ThFD>
                     {
-                        [...Array(data.destinos)].map((e,index) => {
+                        [...Array(data.destinos)].map((e, index) => {
                             return (
-                                <Sth>-</Sth>
+                                <Sth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber2 key={Math.floor(Math.random() * (max - min + 1)) + min} /></Sth>
                             )
                         })
                     }
@@ -81,18 +132,18 @@ const TableProblema = ({ data }) => {
             </tfoot>
             <tbody>
                 {
-                    [...Array(data.fuentes)].map((e,index) => {
+                    [...Array(data.fuentes)].map((e, index) => {
                         return (
-                            <tr>
-                                <Tth>Fuente {index+1}</Tth>
+                            <tr key={Math.floor(Math.random() * (max - min + 1)) + min}>
+                                <Tth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputTexto2 key={Math.floor(Math.random() * (max - min + 1)) + min} /></Tth>
                                 {
-                                    [...Array(data.destinos)].map((e,index) => {
+                                    [...Array(data.destinos)].map((e, index) => {
                                         return (
-                                            <Ith>-</Ith>
+                                            <Ith key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber /></Ith>
                                         )
                                     })
                                 }
-                                <Tth>-</Tth>
+                                <Tth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber3 /></Tth>
                             </tr>
                         )
                     })
