@@ -1,6 +1,6 @@
-import { Formik } from "formik";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from 'uuid';
 
 const Table = styled.table`
     border-collapse: collapse;
@@ -22,6 +22,7 @@ const Th = styled.th`
     padding: 1em;
     text-align:center;
     border-color: #8593FF;
+    width:fit-content;
 `;
 
 const ThFD = styled(Th)`
@@ -50,51 +51,72 @@ export const Ith = styled(Td)`
     font-family: 'Abel';
     cursor:pointer;
 `;
-export const InputTexto = styled.input`
-    width: 30px;
+
+export const Input = styled.input`
+    width: 100px;
+    height:30px;
+    font-size:1em;
     border:none;
-    background:#ADB7FF;
+    background:transparent;
     cursor:pointer;
-    color:white;
     font-family: 'Abel';
+    text-align:center;
+    &:focus-visible{
+        outline:0;
+    }
 `;
 
-export const InputTexto2 = styled.input`
-    width: 30px;
-    border:none;
-    background:#e6e8ff;
-    cursor:pointer;
-    font-family: 'Abel';
-`;
-
-export const InputNumber = styled.input`
-    width: 30px;
-    border:none;
-    background:white;
-    cursor:pointer;
-    font-family: 'Abel';
-`;
-
-export const InputNumber2 = styled.input`
-    width: 30px;
-    border:none;
-    background:#ADB7FF;
-    cursor:pointer;
-    font-family: 'Abel';
+export const InputTexto = styled(Input)`
     color:white;
 `;
 
-export const InputNumber3 = styled.input`
-    width: 30px;
-    border:none;
-    background:#e6e8ff;
-    cursor:pointer;
-    font-family: 'Abel';
+export const InputTexto2 = styled(Input)`
+    color:black;
+`;
+
+export const InputNumber2 = styled(Input)`
+    color:white;
 `;
 
 const TableProblema = ({ data }) => {
-    const min = 1;
-    const max = 10000;
+    const fuentesRef = useRef([]);
+    const destinosRef = useRef([]);
+    const demandasRef = useRef([]);
+    const ofertasRef=useRef([]);
+    const camposRef=useRef([]);
+
+    const addCampos=obj=>{
+        if (obj && !camposRef.current.includes(obj)) {
+            camposRef.current.push(obj);
+        }
+    }
+
+    const addOfertas=obj=>{
+        if (obj && !ofertasRef.current.includes(obj)) {
+            ofertasRef.current.push(obj);
+        }
+    }
+
+    const addDemandas=obj=>{
+        if (obj && !demandasRef.current.includes(obj)) {
+            demandasRef.current.push(obj);
+        }
+    }
+
+    const addDestinos = obj => {
+        if (obj && !destinosRef.current.includes(obj)) {
+            destinosRef.current.push(obj);
+        }
+    }
+
+    const addFuentes = obj => {
+        if (obj && !fuentesRef.current.includes(obj)) {
+            fuentesRef.current.push(obj);
+        }
+    }
+    useEffect(() => {
+        console.log(camposRef.current);
+    }, []);
     return (
         <Table>
             <thead>
@@ -103,12 +125,14 @@ const TableProblema = ({ data }) => {
                     {
                         [...Array(data.destinos)].map((e, index) => {
                             return (
-                                <Sth key={Math.floor(Math.random() * (max - min + 1)) + min}>
+                                <Sth key={uuidv4()}>
                                     <InputTexto
-                                        key={Math.floor(Math.random() * (max - min + 1)) + min}
+                                        key={uuidv4()}
                                         id={"destino" + index}
                                         name={"destino" + index}
                                         type="text"
+                                        defaultValue={"Destino " + parseInt(index + 1)}
+                                        ref={addDestinos}
                                     />
                                 </Sth>
                             )
@@ -123,7 +147,14 @@ const TableProblema = ({ data }) => {
                     {
                         [...Array(data.destinos)].map((e, index) => {
                             return (
-                                <Sth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber2 key={Math.floor(Math.random() * (max - min + 1)) + min} /></Sth>
+                                <Sth key={uuidv4()}><InputNumber2
+                                    key={uuidv4()}
+                                    id={"Demanda" + index}
+                                    name={"Demanda" + index}
+                                    type="text"
+                                    defaultValue="0"
+                                    ref={addDemandas}
+                                /></Sth>
                             )
                         })
                     }
@@ -134,16 +165,35 @@ const TableProblema = ({ data }) => {
                 {
                     [...Array(data.fuentes)].map((e, index) => {
                         return (
-                            <tr key={Math.floor(Math.random() * (max - min + 1)) + min}>
-                                <Tth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputTexto2 key={Math.floor(Math.random() * (max - min + 1)) + min} /></Tth>
+                            <tr key={uuidv4()}>
+                                <Tth key={uuidv4()}><InputTexto2
+                                    key={uuidv4()}
+                                    id={"Fuente" + index}
+                                    name={"Fuente" + index}
+                                    type="text"
+                                    defaultValue={"Fuente " + parseInt(index + 1)}
+                                    ref={addFuentes}
+                                /></Tth>
                                 {
                                     [...Array(data.destinos)].map((e, index) => {
                                         return (
-                                            <Ith key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber /></Ith>
+                                            <Ith key={uuidv4()}><Input
+                                                key={uuidv4()}
+                                                id={"Campo" + camposRef.current.length}
+                                                name={"Campo" + index}
+                                                defaultValue="0"
+                                                ref={addCampos}
+                                            /></Ith>
                                         )
                                     })
                                 }
-                                <Tth key={Math.floor(Math.random() * (max - min + 1)) + min}><InputNumber3 /></Tth>
+                                <Tth key={uuidv4()}><Input
+                                    key={uuidv4()}
+                                    id={"Oferta" + index}
+                                    name={"Oferta" + index}
+                                    defaultValue={"0"}
+                                    ref={addOfertas}
+                                /></Tth>
                             </tr>
                         )
                     })
