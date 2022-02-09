@@ -114,9 +114,6 @@ const TableProblema = ({ data }) => {
             fuentesRef.current.push(obj);
         }
     }
-    useEffect(() => {
-        console.log(camposRef.current);
-    }, []);
     return (
         <Table>
             <thead>
