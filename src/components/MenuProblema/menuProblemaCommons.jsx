@@ -17,7 +17,8 @@ export const TitleProblem = styled(motion.h1)`
 export const GridMenuProblema = styled.div`
     display:grid;
     grid-template-columns: 100vw;
-    grid-template-rows: 30vh 70vh;
+    grid-template-rows: auto auto auto;
+    row-gap:20px;
 `;
 
 export const CardTable = styled(motion.div)`
@@ -29,4 +30,29 @@ export const CardTable = styled(motion.div)`
     border-radius: 4px;
     background: white;
     border: 2px;
+`;
+
+export const PanelBotones = styled.div`
+    margin-left:auto;
+    margin-right:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    column-gap:10px;
+`;
+
+export const GridSelect = styled.div`
+    display:grid;
+    grid-template-rows:auto auto;
+`;
+
+export const SelectAlgoritmo = styled.select`
+
+`;
+
+export const BotonOpcion = styled.button`
+
+`;
+
+export const Option = styled.option`
+
 `;
