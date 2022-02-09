@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import useData from "../hooks/useData";
-import { CardTable, GridMenuProblema,TitleProblem } from "./menuProblemaCommons";
+import { BotonOpcion, CardTable, GridMenuProblema,GridSelect,Option,PanelBotones,SelectAlgoritmo,TitleProblem } from "./menuProblemaCommons";
 import TableProblema from "./TableProblema";
 
 const MenuProblema = () => {
@@ -12,6 +12,19 @@ const MenuProblema = () => {
                 <CardTable>
                     <TableProblema data={data} />
                 </CardTable>
+                <PanelBotones>
+                    <GridSelect>
+                        <label>Seleccione el algoritmo</label>
+                        <SelectAlgoritmo id="selectAlgoritmo">
+                            <Option value="rutaMasCorta" >Ruta mas corta</Option>
+                            <Option value="esquinaNoroeste">Esquina noroeste</Option>
+                            <Option value="vogel">Vogel</Option>
+                        </SelectAlgoritmo>
+                    </GridSelect> 
+                    <PanelBotones>
+                        <BotonOpcion>Resolver</BotonOpcion>
+                    </PanelBotones>
+                </PanelBotones>
             </GridMenuProblema>     
         </Fragment>
     );
