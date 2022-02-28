@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -78,13 +78,7 @@ export const InputNumber2 = styled(Input)`
     color:white;
 `;
 
-const TableProblema = ({ data }) => {
-    const fuentesRef = useRef([]);
-    const destinosRef = useRef([]);
-    const demandasRef = useRef([]);
-    const ofertasRef=useRef([]);
-    const camposRef=useRef([]);
-
+const TableProblema = ({ data, fuentesRef,destinosRef,demandasRef,ofertasRef,camposRef }) => {
     const addCampos=obj=>{
         if (obj && !camposRef.current.includes(obj)) {
             camposRef.current.push(obj);
@@ -172,12 +166,12 @@ const TableProblema = ({ data }) => {
                                     ref={addFuentes}
                                 /></Tth>
                                 {
-                                    [...Array(data.destinos)].map((e, index) => {
+                                    [...Array(data.destinos)].map(() => {
                                         return (
                                             <Ith key={uuidv4()}><Input
                                                 key={uuidv4()}
-                                                id={"Campo" + camposRef.current.length}
-                                                name={"Campo" + index}
+                                                id={"Campo" + uuidv4()}
+                                                name={"Campo" + uuidv4()}
                                                 defaultValue="0"
                                                 ref={addCampos}
                                             /></Ith>
