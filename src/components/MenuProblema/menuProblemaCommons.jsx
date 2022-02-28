@@ -43,16 +43,30 @@ export const PanelBotones = styled.div`
 export const GridSelect = styled.div`
     display:grid;
     grid-template-rows:auto auto;
+    height:60px;
 `;
 
 export const SelectAlgoritmo = styled.select`
-
+    border-color:#8593FF;
+    border-radius:5px;
+    font-family:"Abel";
+    font-size:15px;
 `;
 
-export const BotonOpcion = styled.button`
-
+export const BotonOpcion = styled(motion.button)`
+    border:none;
+    color:white;
+    cursor:pointer;
+    background:#475DFF;
+    border-radius:5px;
+    font-family:"Abel";
+    padding:1em;
+    font-size:1em;
+    &:hover{
+        background:  #1a34ff;
+    }
 `;
 
 export const Option = styled.option`
-
+    
 `;
