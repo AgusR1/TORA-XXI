@@ -38,7 +38,6 @@ const MenuProblema = () => {
                     matrizCostes[i] = parseFloat(camposRef.current[i].value, 2);
                 }
                 //el bucle se ejecutara hasta el punto en el que la demanda queda satisfecha
-                let i = 0;
                 do {
                     let pos;
                     let auxPos;
@@ -60,16 +59,58 @@ const MenuProblema = () => {
                             posOferta = Math.ceil((pos + 1) / tablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                             oferta = tablaOfertas[posOferta-1];
                             //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
+                            if (oferta > demanda) {
+                                tablaDemandas[tablaDemandas.length - 1] = 0
+                                tablaOfertas[posOferta] = oferta - demanda
+                                costoTotal = costoTotal + demanda * matrizCostes[pos];
+                                for (let i = 0; i < matrizCostes.length; i++) {
+                                    if ((i + 1) % auxPos === 0) {
+                                        matrizCostes[i] = null;
+                                    }
+                                }
+                                sumaDemanda = sumaDemanda - demanda;
+                                sumaOferta = sumaOferta - demanda;
+                            } else {
+                                tablaDemandas[tablaDemandas.length - 1] = demanda - oferta;
+                                tablaOfertas[posOferta] = 0;
+                                costoTotal = costoTotal + oferta * matrizCostes[pos];
+                                for (let i = 1; i < tablaOfertas.length + 1; i++) {
+                                    matrizCostes[i * posOferta - 1] = null;
+                                }
+                                sumaDemanda = sumaDemanda - oferta;
+                                sumaOferta = sumaOferta - oferta;
+                            }
                             break;
                         default:
                             demanda = tablaDemandas[auxPos - 1]//auxPos siempre vale +1 la posicion correspondiente en el array de demanda
                             posOferta = Math.ceil((pos + 1) / tablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                             oferta = tablaOfertas[posOferta-1];
                             //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
+                            if(oferta>demanda){
+                                tablaDemandas[auxPos - 1]=0
+                                tablaOfertas[posOferta]=oferta-demanda
+                                costoTotal=costoTotal+demanda*matrizCostes[pos];
+                                for (let i = 0; i < matrizCostes.length; i++) {
+                                    if((i+1)%auxPos===0){
+                                        matrizCostes[i]=null;
+                                    }
+                                }
+                                sumaDemanda=sumaDemanda-demanda;
+                                sumaOferta=sumaOferta-demanda;
+                            }else{
+                                tablaDemandas[auxPos - 1]=demanda-oferta;
+                                tablaOfertas[posOferta]=0;
+                                costoTotal = costoTotal + oferta * matrizCostes[pos];
+                                for (let i = 1; i < tablaOfertas.length+1; i++) {
+                                    matrizCostes[i*posOferta-1]=null;
+                                }
+                                sumaDemanda=sumaDemanda-oferta;
+                                sumaOferta=sumaOferta-oferta;
+                            }
                             break;
                     }
-                    i++;
-                } while (i < 2);
+                } while (sumaDemanda>0);
+                console.log(costoTotal);
                 break;
             case "esquinaNoroeste":
 
