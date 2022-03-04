@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^13.5.0",
     "concurrently": "^6.5.1",
     "cross-env": "^7.0.3",
-    "electron": "^16.0.5",
     "formik": "^2.2.9",
     "framer-motion": "^5.5.5",
     "react": "^17.0.2",
@@ -28,8 +27,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-react": "concurrently  \"SET BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron": "electron ."
+    "electron-react": "concurrently  \"SET BROWSER=none && yarn start\" \"wait-on http://localhost:3000 && electron\"",
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "Tora XXI",
+    "extends": null,
+    "asar": true
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "electron": "^16.0.5",
     "electron-builder": "^22.14.13"
   }
 }
