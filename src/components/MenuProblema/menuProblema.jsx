@@ -51,7 +51,6 @@ const MenuProblema = () => {
                     pos = matrizCostes.indexOf(minCosto);
                     //calculo el modulo en base a la longitud del array de demandas que es igual a la cantidad de clientes o destinos que existen 
                     auxPos = parseInt(pos + 1) % tablaDemandas.length//el +1 es para evitar realizar una operacion de modulo con un valor de 0 en caso de que el minCosto se encuentre en la primera posicion del array
-
                     //si devuelve 1 significa que pertenece al primer destino, si devuelve 2 significa que pertenece al segundo destino si devuelve n pertenece al destino n, si devuelve 0 significa que pertenece al ultimo destino
                     switch (auxPos) {
                         case 0:
@@ -59,26 +58,26 @@ const MenuProblema = () => {
                             posOferta = Math.ceil((pos + 1) / tablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                             oferta = tablaOfertas[posOferta-1];
                             //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-                            if (oferta > demanda) {
-                                tablaDemandas[tablaDemandas.length - 1] = 0
-                                tablaOfertas[posOferta] = oferta - demanda
-                                costoTotal = costoTotal + demanda * matrizCostes[pos];
-                                for (let i = 0; i < matrizCostes.length; i++) {
-                                    if ((i + 1) % auxPos === 0) {
-                                        matrizCostes[i] = null;
-                                    }
+                            if (oferta > 0 && demanda>0){
+                                if (oferta > demanda) {
+                                    //utilizamos la longitud del array de demandas como posicion porque sabemos que si el case es 0 entonces es el ultimo elemento del array de demanda
+                                    tablaDemandas[tablaDemandas.length - 1] = 0;//si la oferta supera a la demanda entonces la demanda de ese cliente queda satisfecha y se setea en 0
+                                    tablaOfertas[posOferta-1] = oferta - demanda;//restamos aquello que fue utilizado para suplir la demanda anterior al inventario del deposito
+                                    costoTotal = costoTotal + demanda * matrizCostes[pos];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo 
+                                    sumaDemanda = sumaDemanda - demanda;//restamos la demanda que ya se suplio
+                                    sumaOferta = sumaOferta - demanda;//restamos la oferta que tenemos disponible
+                                    matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                } else {
+                                    tablaDemandas[tablaDemandas.length - 1] = demanda - oferta;//si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
+                                    tablaOfertas[posOferta - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
+                                    costoTotal = costoTotal + oferta * matrizCostes[pos];//el costo total se calcula en base a cuanto se entrego en lugar de cuanto se demando
+                                    sumaDemanda = sumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
+                                    sumaOferta = sumaOferta - oferta;
+                                    matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                    
                                 }
-                                sumaDemanda = sumaDemanda - demanda;
-                                sumaOferta = sumaOferta - demanda;
-                            } else {
-                                tablaDemandas[tablaDemandas.length - 1] = demanda - oferta;
-                                tablaOfertas[posOferta] = 0;
-                                costoTotal = costoTotal + oferta * matrizCostes[pos];
-                                for (let i = 1; i < tablaOfertas.length + 1; i++) {
-                                    matrizCostes[i * posOferta - 1] = null;
-                                }
-                                sumaDemanda = sumaDemanda - oferta;
-                                sumaOferta = sumaOferta - oferta;
+                            }else{
+                                matrizCostes[pos] = Math.max(...matrizCostes) + 1;//aquellos campos que se encuentren en una fila o columna donde la demanda fue satisfecha o la oferta es 0 se les asigna un valor por sobre el maximo, de este modo garantizamos que la funcion Math.min() no vuelva a buscarlo
                             }
                             break;
                         default:
@@ -86,31 +85,28 @@ const MenuProblema = () => {
                             posOferta = Math.ceil((pos + 1) / tablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                             oferta = tablaOfertas[posOferta-1];
                             //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-                            if(oferta>demanda){
-                                tablaDemandas[auxPos - 1]=0
-                                tablaOfertas[posOferta]=oferta-demanda
-                                costoTotal=costoTotal+demanda*matrizCostes[pos];
-                                for (let i = 0; i < matrizCostes.length; i++) {
-                                    if((i+1)%auxPos===0){
-                                        matrizCostes[i]=null;
-                                    }
+                            if (oferta > 0 && demanda>0) {
+                                if (oferta > demanda) {
+                                    tablaDemandas[auxPos - 1] = 0;//si la oferta supera a la demanda entonces la demanda de ese cliente queda satisfecha y se setea en 0
+                                    tablaOfertas[posOferta - 1] = oferta - demanda;//restamos aquello que fue utilizado para suplir la demanda anterior al inventario del deposito
+                                    costoTotal = costoTotal + demanda * matrizCostes[pos];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo 
+                                    sumaDemanda = sumaDemanda - demanda;//restamos la demanda que ya se suplio
+                                    sumaOferta = sumaOferta - demanda;//restamos la oferta que tenemos disponible
+                                    matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                } else {                          
+                                    tablaDemandas[auxPos - 1] = demanda - oferta; //si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
+                                    tablaOfertas[posOferta - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
+                                    costoTotal = costoTotal + oferta * matrizCostes[pos];//el costo total se calcula en base a cuanto se entrego en lugar de cuanto se demando
+                                    sumaDemanda = sumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
+                                    sumaOferta = sumaOferta - oferta;
+                                    matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
                                 }
-                                sumaDemanda=sumaDemanda-demanda;
-                                sumaOferta=sumaOferta-demanda;
                             }else{
-                                tablaDemandas[auxPos - 1]=demanda-oferta;
-                                tablaOfertas[posOferta]=0;
-                                costoTotal = costoTotal + oferta * matrizCostes[pos];
-                                for (let i = 1; i < tablaOfertas.length+1; i++) {
-                                    matrizCostes[i*posOferta-1]=null;
-                                }
-                                sumaDemanda=sumaDemanda-oferta;
-                                sumaOferta=sumaOferta-oferta;
+                                matrizCostes[pos] = Math.max(...matrizCostes) + 1;////aquellos campos que se encuentren en una fila o columna donde la demanda fue satisfecha o la oferta es 0 se les asigna un valor por sobre el maximo, de este modo garantizamos que la funcion Math.min() no vuelva a buscarlo
                             }
                             break;
                     }
                 } while (sumaDemanda>0);
-                console.log(costoTotal);
                 break;
             case "esquinaNoroeste":
 
