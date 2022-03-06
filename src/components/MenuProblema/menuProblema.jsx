@@ -21,6 +21,7 @@ const MenuProblema = () => {
                 let tablaOfertas = [];
                 let minCosto;
                 let costoTotal = 0;
+                let diferencia=0;
                 for (let i = 0; i < demandasRef.current.length; i++) {
                     //paso los valores del input a un array donde manipularlos
                     tablaDemandas[i] = parseFloat(demandasRef.current[i].value, 2);
@@ -36,6 +37,23 @@ const MenuProblema = () => {
                 for (let i = 0; i < camposRef.current.length; i++) {
                     //paso los valores del input a un array donde manipularlos
                     matrizCostes[i] = parseFloat(camposRef.current[i].value, 2);
+                }
+                //balanceo
+                if(sumaOferta>sumaDemanda){
+                    diferencia=sumaOferta-sumaDemanda;//calculamos la diferencia entre oferta y demanda
+                    sumaDemanda=sumaDemanda+diferencia;
+                    tablaDemandas.push(diferencia);//añadimos la diferencia como la demanda del nuevo destino ficticio
+                    let indices = [];
+                    let count=0;
+                    for (let i = 0; i < matrizCostes.length; i++) {
+                        if((i+1)%(tablaDemandas.length-1)===0){
+                            indices.push(i+count);
+                            count++;
+                        }
+                    }
+                    for (let i = 0; i < indices.length; i++) {
+                        matrizCostes.splice((indices[i]+1), 0, 0);
+                    }
                 }
                 //el bucle se ejecutara hasta el punto en el que la demanda queda satisfecha
                 do {
@@ -67,6 +85,10 @@ const MenuProblema = () => {
                                     sumaDemanda = sumaDemanda - demanda;//restamos la demanda que ya se suplio
                                     sumaOferta = sumaOferta - demanda;//restamos la oferta que tenemos disponible
                                     matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                    console.log("flag 1");
+                                    console.log(tablaDemandas);
+                                    console.log("el costo minimo es: " + minCosto + " corresponde al deposito " + posOferta + " que ofrece " + oferta + " insumos y al cliente " + tablaDemandas[tablaDemandas.length - 1]+" que demanda "+demanda+" insumos, siendo el costo acumulado $"+costoTotal);
+                                    console.log(sumaDemanda);
                                 } else {
                                     tablaDemandas[tablaDemandas.length - 1] = demanda - oferta;//si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
                                     tablaOfertas[posOferta - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
@@ -74,7 +96,10 @@ const MenuProblema = () => {
                                     sumaDemanda = sumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
                                     sumaOferta = sumaOferta - oferta;
                                     matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
-                                    
+                                    console.log("flag 2");
+                                    console.log(tablaDemandas);
+                                    console.log("el costo minimo es: " + minCosto + " corresponde al deposito " + posOferta + " que ofrece " + oferta + " insumos y al cliente " + tablaDemandas[tablaDemandas.length - 1] + " que demanda " + demanda + " insumos, siendo el costo acumulado $" + costoTotal);
+                                    console.log(sumaDemanda);
                                 }
                             }else{
                                 matrizCostes[pos] = Math.max(...matrizCostes) + 1;//aquellos campos que se encuentren en una fila o columna donde la demanda fue satisfecha o la oferta es 0 se les asigna un valor por sobre el maximo, de este modo garantizamos que la funcion Math.min() no vuelva a buscarlo
@@ -93,6 +118,8 @@ const MenuProblema = () => {
                                     sumaDemanda = sumaDemanda - demanda;//restamos la demanda que ya se suplio
                                     sumaOferta = sumaOferta - demanda;//restamos la oferta que tenemos disponible
                                     matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                    console.log("flag 3");
+                                    console.log("el costo minimo es: " + minCosto + " corresponde al deposito " + posOferta + " que ofrece " + oferta + " insumos y al cliente " + tablaDemandas[auxPos - 1] + " que demanda " + demanda + " insumos, siendo el costo acumulado $" + costoTotal);
                                 } else {                          
                                     tablaDemandas[auxPos - 1] = demanda - oferta; //si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
                                     tablaOfertas[posOferta - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
@@ -100,6 +127,9 @@ const MenuProblema = () => {
                                     sumaDemanda = sumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
                                     sumaOferta = sumaOferta - oferta;
                                     matrizCostes[pos] = Math.max(...matrizCostes) + 1;//hacemos que el actual costo minimo tome un valor mayor al maximo coste, de este modo nos aseguramos que la funcion min no vuelva a usarlo
+                                    console.log("flag 4");
+                                    console.log(tablaDemandas);
+                                    console.log("el costo minimo es: " + minCosto + " corresponde al deposito " + posOferta + " que ofrece " + oferta + " insumos y al cliente " + tablaDemandas[auxPos - 1] + " que demanda " + demanda + " insumos, siendo el costo acumulado $" + costoTotal);
                                 }
                             }else{
                                 matrizCostes[pos] = Math.max(...matrizCostes) + 1;////aquellos campos que se encuentren en una fila o columna donde la demanda fue satisfecha o la oferta es 0 se les asigna un valor por sobre el maximo, de este modo garantizamos que la funcion Math.min() no vuelva a buscarlo
@@ -107,6 +137,7 @@ const MenuProblema = () => {
                             break;
                     }
                 } while (sumaDemanda>0);
+                console.log(costoTotal);
                 break;
             case "esquinaNoroeste":
 
