@@ -162,7 +162,7 @@ const TableProblema = ({ data, fuentesRef,destinosRef,demandasRef,ofertasRef,cam
                                     id={"Fuente" + index}
                                     name={"Fuente" + index}
                                     type="text"
-                                    defaultValue={"Fuente " + parseInt(index + 1)}
+                                    defaultValue={"Deposito " + parseInt(index + 1)}
                                     ref={addFuentes}
                                 /></Tth>
                                 {
