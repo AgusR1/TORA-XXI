@@ -67,6 +67,89 @@ export const BotonOpcion = styled(motion.button)`
     }
 `;
 
+export const BotonVolver = styled(motion.button)`
+    border-color:black ;
+    color:black;
+    cursor:pointer;
+    background:white;
+    border-radius:5px;
+    font-family:"Abel";
+    padding:1em;
+    font-size:1em;
+    &:hover{
+        color:white;
+        background:  black;
+    }
+`;
+
 export const Option = styled.option`
     
+`;
+
+export const GridSolucion = styled.div`
+    display:grid;
+    grid-template-rows:80%,20%;
+    grid-template-columns:auto;
+`;
+
+export const CuadroSolucion = styled(motion.div)`
+    display:grid;
+    grid-template-rows:80% 20%;
+    border-radius:5px;
+    background:white;
+    box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px 0px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:1rem;
+    min-width:600px;
+`;
+export const GridDetalle = styled.div`
+    display:grid;
+    grid-template-columns:auto;
+    grid-template-rows:auto;
+`;
+
+export const CuadroCosto = styled(motion.div)`
+    display:flex;
+    background:#8593FF;
+    padding:1rem;
+    align-items:center;
+    justify-content:center;
+    border-radius:5px;
+    color:white;
+    font-size:2em;
+    width:max-content;
+    margin-left:auto;
+    margin-right:auto;
+`;
+
+export const CuadroNum = styled(motion.div)`
+    display:flex;
+    background:#8593FF;
+    padding:1rem;
+    align-items:center;
+    justify-content:center;
+    border-radius:5px;
+    color:white;
+    font-size:1em;
+    width:max-content;
+    margin-left:auto;
+    margin-right:auto;
+`;
+
+export const DivDetalle = styled.div`
+    display:grid;
+    grid-template-columns:10% 90%;
+    grid-template-rows:auto;
+    margin-top:1em;
+    margin-bottom:1em;
+    font-size:1.1em ;
+`
+
+export const TextSolucion = styled.p`
+    font-family:'Abel';
+    margin-block-end:0;
+    margin-block-start:0;
+    margin-top:auto;
+    margin-bottom:auto;
 `;
