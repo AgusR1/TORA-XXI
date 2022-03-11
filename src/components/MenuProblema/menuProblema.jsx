@@ -206,23 +206,29 @@ const MenuProblema = () => {
                         posDestino = parseInt(i + 1) % ENtablaDemandas.length;
                         switch (posDestino) {
                             case 0:
-                                demanda=ENtablaDemandas[ENtablaDemandas.length-1];
+                                demanda = ENtablaDemandas[ENtablaDemandas.length - 1];
                                 posDeposito = Math.ceil((i + 1) / ENtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                                 oferta = ENtablaOfertas[posDeposito - 1];
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-                                if (demanda === 0 || oferta===0) {
+                                console.log("costo: " + ENmatrizCostes[i]);
+                                console.log("oferta: "+oferta);
+                                console.log("demanda: "+demanda);
+                                console.log("*********************************");
+                                if (demanda === 0 || oferta === 0) {
                                     break;
                                 } else {
-                                    if (oferta>demanda) {
-                                        console.log("el numero de destino es: " + [ENtablaDemandas.length]);
+                                    if (oferta > demanda) {
+                                        /*console.log("el numero de destino es: " + [ENtablaDemandas.length]);
                                         console.log("y la demanda es: "+demanda)
                                         console.log("el numero de deposito es: " + posDeposito);
                                         console.log("y la oferta es: "+oferta);
-                                        console.log("********************************************");
+                                        console.log("********************************************");*/
                                         //utilizamos la longitud del array de demandas como posicion porque sabemos que si el case es 0 entonces es el ultimo elemento del array de demanda
                                         ENtablaDemandas[ENtablaDemandas.length - 1] = 0;//si la oferta supera a la demanda entonces la demanda de ese cliente queda satisfecha y se setea en 0
                                         ENtablaOfertas[posDeposito - 1] = oferta - demanda;//restamos aquello que fue utilizado para suplir la demanda anterior al inventario del deposito
-                                        ENcostoTotal = ENcostoTotal + demanda * ENmatrizCostes[i];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo 
+                                        ENcostoTotal = ENcostoTotal + demanda * ENmatrizCostes[i];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo
+                                        console.log("costo Total" + ENcostoTotal);
+                                        console.log("*********************************");
                                         ENsumaDemanda = ENsumaDemanda - demanda;//restamos la demanda que ya se suplio
                                         ENsumaOferta = ENsumaOferta - demanda;//restamos la oferta que tenemos disponible
                                         setMinCostos(cost => [...cost, ENmatrizCostes[i]]);
@@ -230,16 +236,17 @@ const MenuProblema = () => {
                                         setListaFuentes(listaF => [...listaF, fuentesRef.current[posDeposito - 1].value]);
                                         setListaDemandas(listaD => [...listaD, demanda]);
                                         setListaClientes(listaC => [...listaC, destinosRef.current[ENtablaDemandas.length - 1].value]);
-                                    }else{
-                                        console.log("el numero de destino es: " + [ENtablaDemandas.length]);
+                                    } else {
+                                        /*console.log("el numero de destino es: " + [ENtablaDemandas.length]);
                                         console.log("y la demanda es: " + demanda)
                                         console.log("el numero de deposito es: " + posDeposito);
-                                        
                                         console.log("y la oferta es: " + oferta);
-                                        console.log("********************************************");
+                                        console.log("********************************************");*/
                                         ENtablaDemandas[ENtablaDemandas.length - 1] = demanda - oferta;//si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
                                         ENtablaOfertas[posDeposito - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
                                         ENcostoTotal = ENcostoTotal + oferta * ENmatrizCostes[i];//el costo total se calcula en base a cuanto se entrego en lugar de cuanto se demando
+                                        console.log("costo Total" + ENcostoTotal);
+                                        console.log("*********************************");
                                         ENsumaDemanda = ENsumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
                                         ENsumaOferta = ENsumaOferta - oferta;
                                         setMinCostos(cost => [...cost, ENmatrizCostes[i]]);
@@ -255,19 +262,26 @@ const MenuProblema = () => {
                                 posDeposito = Math.ceil((i + 1) / ENtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
                                 oferta = ENtablaOfertas[posDeposito - 1];
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-                                if (demanda === 0 || oferta===0) {
+                                console.log("costo: " + ENmatrizCostes[i]);
+                                console.log("oferta: " + oferta);
+                                console.log("demanda: " + demanda);
+                                console.log("*********************************");
+                                if (demanda === 0 || oferta === 0) {
                                     break;
                                 } else {
-                                    if(oferta>demanda){
-                                        console.log("el numero de destino es: " + posDestino);
+                                    if (oferta > demanda) {
+                                        /*console.log("el numero de destino es: " + posDestino);
                                         console.log("y la demanda es: " + demanda)
                                         console.log("el numero de deposito es: " + posDeposito);
                                         console.log("y la oferta es: "+oferta);
-                                        console.log("*****************************************");
+                                        console.log("*****************************************");*/
+
                                         //utilizamos la longitud del array de demandas como posicion porque sabemos que si el case es 0 entonces es el ultimo elemento del array de demanda
                                         ENtablaDemandas[posDestino - 1] = 0;//si la oferta supera a la demanda entonces la demanda de ese cliente queda satisfecha y se setea en 0
                                         ENtablaOfertas[posDeposito - 1] = oferta - demanda;//restamos aquello que fue utilizado para suplir la demanda anterior al inventario del deposito
-                                        ENcostoTotal = ENcostoTotal + demanda * ENmatrizCostes[i];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo 
+                                        ENcostoTotal = ENcostoTotal + demanda * ENmatrizCostes[i];//calculamos el costo total, sabemos que se cubrio toda la demanda restante por lo que el calculo es demanda*costo
+                                        console.log("costo Total: " + ENcostoTotal);
+                                        console.log("*********************************");
                                         ENsumaDemanda = ENsumaDemanda - demanda;//restamos la demanda que ya se suplio
                                         ENsumaOferta = ENsumaOferta - demanda;//restamos la oferta que tenemos disponible
                                         setMinCostos(cost => [...cost, ENmatrizCostes[i]]);
@@ -275,30 +289,34 @@ const MenuProblema = () => {
                                         setListaFuentes(listaF => [...listaF, fuentesRef.current[posDeposito - 1].value]);
                                         setListaDemandas(listaD => [...listaD, demanda]);
                                         setListaClientes(listaC => [...listaC, destinosRef.current[posDestino - 1].value]);
-                                    }else{
-                                        console.log("el numero de destino es: " + posDestino);
+                                    } else {
+
+                                        /*console.log("el numero de destino es: " + posDestino);
                                         console.log("y la demanda es: " + demanda)
                                         console.log("el numero de deposito es: " + posDeposito);
                                         console.log("y la oferta es: " + oferta);
-                                        console.log("*****************************************");
-                                        ENtablaDemandas[ENtablaDemandas.length - 1] = demanda - oferta;//si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
+                                        console.log("*****************************************");*/
+
+                                        ENtablaDemandas[posDestino - 1] = demanda - oferta;//si la demanda es igual o superior a la oferta restar la oferta nos dejara con la demanda restante por satisfacer o con la demanda en 0
                                         ENtablaOfertas[posDeposito - 1] = 0;//seteamos en 0 el valor de la oferta porque todo lo que estaba disponible fue entregado
                                         ENcostoTotal = ENcostoTotal + oferta * ENmatrizCostes[i];//el costo total se calcula en base a cuanto se entrego en lugar de cuanto se demando
+                                        console.log("costo Total: " + ENcostoTotal);
+                                        console.log("*********************************");
                                         ENsumaDemanda = ENsumaDemanda - oferta;//se calcula la demanda total restante en base a lo que la oferta entrego
                                         ENsumaOferta = ENsumaOferta - oferta;
                                         setMinCostos(cost => [...cost, ENmatrizCostes[i]]);
                                         setListaOfertas(listaO => [...listaO, oferta]);
                                         setListaFuentes(listaF => [...listaF, fuentesRef.current[posDeposito - 1].value]);
                                         setListaDemandas(listaD => [...listaD, demanda]);
-                                        setListaClientes(listaC => [...listaC, destinosRef.current[ENtablaDemandas.length - 1].value]);
+                                        setListaClientes(listaC => [...listaC, destinosRef.current[posDestino - 1].value]);
                                     }
                                 }
-                                setCostoTotal(ENcostoTotal);
-                                setPantalla("solucion");
                                 break;
                         }
                     }
                 } while (ENsumaDemanda > 0);
+                setCostoTotal(ENcostoTotal);
+                setPantalla("solucion");
                 break;
             case "Vogel":
 
