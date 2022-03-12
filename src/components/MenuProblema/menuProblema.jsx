@@ -287,8 +287,12 @@ const MenuProblema = () => {
                 let VtablaOfertas = [];
                 let Vdiferencia = 0;
                 let VcostoTotal = 0;
-                let penalizacionDemandas=[];
-                let penalizacionOfertas=[];
+                let penalizacionDemandas = [];//en este array se guardaran las penalizaciones de las ofertas, donde el numero de indice que tengan indicara a que cliente pertenecen
+                let penalizacionOfertas = [];//en este array se guardaran las penalizaciones de las demandas, donde el numero de indice que tengan indicara a que deposito pertenecen
+                let maximosDemandas = [];//en este array se guardaran los valores que sean el segundo mas bajo encontrados, donde el numero de indice que ocupen indicara a que cliente corresponden
+                let maximosOfertas = [];//en este array se guardaran los valores que sean el segundo mas bajo encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que deposito corresponden
+                let minimosDemandas = [];//en este array se guardaran los valores minimos encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que cliente corresponden
+                let minimosOfertas = [];//en este array se guardaran los valores minimos encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que deposito corresponden
                 for (let i = 0; i < demandasRef.current.length; i++) {
                     //paso los valores del input a un array donde manipularlos
                     VtablaDemandas[i] = parseFloat(demandasRef.current[i].value, 2);
@@ -322,9 +326,11 @@ const MenuProblema = () => {
                         VmatrizCostes.splice((indices[i] + 1), 0, 0);
                     }
                 }
+                let min2;//aqui se alamecenara el segundo valor mas chico
+                let min = null;//aqui se almacenara el valor mas chico
                 do {
                     //debo determinar la penalizacion
-                    for (let i = 0; i < VtablaDemandas.length.length; i++) {
+                    for (let i = 0; i < VmatrizCostes.length; i++) {
                         let posDestino;
                         let posDeposito;
                         let oferta;
@@ -333,20 +339,31 @@ const MenuProblema = () => {
                         switch (posDestino) {
                             case 0:
                                 demanda = VtablaDemandas[VtablaDemandas.length - 1];
-                                posDeposito = Math.ceil((i + 1) / VtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
-                                oferta = VtablaOfertas[posDeposito - 1];
-                                //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-                                if (demanda === 0 || oferta === 0) {
+                                if (demanda === 0) {
                                     break;
-                                }else{
+                                } else {
+                                    if (min === null) {
+                                        min = VmatrizCostes[i];
+                                        min2 = VmatrizCostes[i];
+                                    } else {
+                                        if (VmatrizCostes[i] <= min) {
+                                            min = VmatrizCostes[i];
+                                            minimosDemandas[VtablaDemandas.length - 1] = min;
+                                        } else {
+                                            if (VmatrizCostes[i] <= min2) {
+                                                min2 = VmatrizCostes[i];
+                                                maximosDemandas[VtablaDemandas.length - 1] = min2;
+                                            }
+                                        }
 
+                                    }
                                 }
                                 break;
                             default:
                                 break;
-                        } 
+                        }
                     }
-                } while (VsumaDemanda>0);
+                } while (VsumaDemanda > 0);
                 break;
             default:
 
