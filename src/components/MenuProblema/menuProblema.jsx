@@ -326,8 +326,11 @@ const MenuProblema = () => {
                         VmatrizCostes.splice((indices[i] + 1), 0, 0);
                     }
                 }
-                let min2;//aqui se alamecenara el segundo valor mas chico
-                let min = null;//aqui se almacenara el valor mas chico
+                let minD2 = null;//aqui se alamecenara el segundo valor mas chico
+                let minD = null;//aqui se almacenara el valor mas chico
+                let minO = null;//aqui se almacenara el valor mas chico
+                let minO2 = null;//aqui se alamecenara el segundo valor mas chico
+                let i=0;
                 do {
                     //debo determinar la penalizacion
                     for (let i = 0; i < VmatrizCostes.length; i++) {
@@ -339,31 +342,61 @@ const MenuProblema = () => {
                         switch (posDestino) {
                             case 0:
                                 demanda = VtablaDemandas[VtablaDemandas.length - 1];
-                                if (demanda === 0) {
-                                    break;
-                                } else {
-                                    if (min === null) {
-                                        min = VmatrizCostes[i];
-                                        min2 = VmatrizCostes[i];
-                                    } else {
-                                        if (VmatrizCostes[i] <= min) {
-                                            min = VmatrizCostes[i];
-                                            minimosDemandas[VtablaDemandas.length - 1] = min;
-                                        } else {
-                                            if (VmatrizCostes[i] <= min2) {
-                                                min2 = VmatrizCostes[i];
-                                                maximosDemandas[VtablaDemandas.length - 1] = min2;
+                                posDeposito = Math.ceil((i + 1) / ENtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
+                                oferta = ENtablaOfertas[posDeposito - 1];
+                                //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
+
+                                //codigo que encuentra los dos costos menores y calcula las penalizaciones para cada oferta y demanda
+                                if (demanda !== 0 && oferta!==0) {
+                                    if (minD !== null) {
+                                        if (VmatrizCostes[i] <= minD) {
+                                            minD = VmatrizCostes[i];
+                                            minimosDemandas[VtablaDemandas.length - 1] = minD;
+                                        }else{
+                                            if (minD2 !== null) {
+                                                if (VmatrizCostes[i] <= minD2) {
+                                                    minD2 = VmatrizCostes[i];
+                                                    maximosDemandas[VtablaDemandas.length - 1] = minD2;
+                                                }
+                                            } else {
+                                                minD2 = VmatrizCostes[i];
+                                                maximosDemandas[VtablaDemandas.length - 1] = minD2;
                                             }
                                         }
-
+                                    }else{
+                                        minD = VmatrizCostes[i];
+                                        minimosDemandas[VtablaDemandas.length - 1] = minD;
                                     }
+                                    penalizacionDemandas[VtablaDemandas.length - 1] = minD2 - minD;
+                                    if (minO !== null) {
+                                        if (VmatrizCostes[i] <= minO) {
+                                            minO = VmatrizCostes[i];
+                                            minimosOfertas[posDeposito - 1] = minO;
+                                        } else {
+                                            if (minO2 !== null) {
+                                                if (VmatrizCostes[i] <= minO2) {
+                                                    minO2 = VmatrizCostes[i];
+                                                    maximosOfertas[posDeposito - 1] = minO2;
+                                                }
+                                            } else {
+                                                minO2 = VmatrizCostes[i];
+                                                maximosDemandas[posDeposito - 1] = minO2;
+                                            }
+                                        }
+                                    } else {
+                                        minO = VmatrizCostes[i];
+                                        minimosDemandas[VtablaDemandas.length - 1] = minO;
+                                    }
+                                    penalizacionOfertas[posDeposito - 1]=minO2-minO;
                                 }
                                 break;
                             default:
+                                
                                 break;
                         }
                     }
-                } while (VsumaDemanda > 0);
+                    i++;
+                } while (i < 10);
                 break;
             default:
 
