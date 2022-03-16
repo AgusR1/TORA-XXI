@@ -342,10 +342,9 @@ const MenuProblema = () => {
                         switch (posDestino) {
                             case 0:
                                 demanda = VtablaDemandas[VtablaDemandas.length - 1];
-                                posDeposito = Math.ceil((i + 1) / ENtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
-                                oferta = ENtablaOfertas[posDeposito - 1];
+                                posDeposito = Math.ceil((i + 1) / VtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
+                                oferta = VtablaOfertas[posDeposito - 1];
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
-
                                 //codigo que encuentra los dos costos menores y calcula las penalizaciones para cada oferta y demanda
                                 if (demanda !== 0 && oferta!==0) {
                                     if (minD !== null) {
@@ -446,10 +445,56 @@ const MenuProblema = () => {
                     let maxPenDemanda;
                     let maxPenOferta;
                     let maxPen;
+                    let indice;
+                    let demanda;
+                    let oferta;
+                    let deposito;
+                    let minCost=null;
+                    let costIndex;
                     maxPenDemanda=Math.max(...penalizacionDemandas);
                     maxPenOferta=Math.max(...penalizacionOfertas);
                     if(maxPenDemanda>maxPenOferta){
                         maxPen=maxPenDemanda;
+                        indice = penalizacionDemandas.indexOf(Math.max(...penalizacionDemandas));
+                        demanda=VtablaDemandas[indice];
+                        for (let i = 0; i < VmatrizCostes.length; i++) {
+                            if(i+1%indice+1===0){
+                                if(minCost===null){
+                                    minCost=VmatrizCostes[i];
+                                    costIndex=i;
+                                }else{
+                                    if(VmatrizCostes[i]<=minCost){
+                                        minCost = VmatrizCostes[i];
+                                        costIndex=i;
+                                    }
+                                }
+                            }
+                        }
+                        deposito = Math.ceil((costIndex + 1) / VtablaDemandas.length);
+                        oferta=VtablaOfertas[deposito-1];
+                        if (oferta>demanda) {
+                            VtablaDemandas[indice]=0;
+                            VtablaOfertas[deposito-1]=oferta-demanda;
+                            VcostoTotal=VcostoTotal+demanda*VmatrizCostes[costIndex];
+                            VsumaDemanda=VsumaDemanda-demanda;
+                            VsumaOferta=VsumaOferta-demanda;
+                            setMinCostos(cost => [...cost, VmatrizCostes[costIndex]]);
+                            setListaOfertas(listaO => [...listaO, demanda]);
+                            setListaFuentes(listaF => [...listaF, fuentesRef.current[deposito-1].value]);
+                            setListaDemandas(listaD => [...listaD, demanda]);
+                            setListaClientes(listaC => [...listaC, destinosRef.current[indice].value]);
+                        }else{
+                            VtablaOfertas[deposito-1]=0;
+                            VtablaDemandas[indice]=demanda-oferta;
+                            VcostoTotal=VcostoTotal+oferta*VmatrizCostes[costIndex];
+                            VsumaDemanda=VsumaDemanda-oferta;
+                            VsumaOferta=VsumaOferta-oferta;
+                            setMinCostos(cost => [...cost, VmatrizCostes[costIndex]]);
+                            setListaOfertas(listaO => [...listaO, oferta]);
+                            setListaFuentes(listaF => [...listaF, fuentesRef.current[deposito - 1].value]);
+                            setListaDemandas(listaD => [...listaD, demanda]);
+                            setListaClientes(listaC => [...listaC, destinosRef.current[indice].value]);
+                        }
                     }else{
                         maxPen=maxPenOferta;
                     }
