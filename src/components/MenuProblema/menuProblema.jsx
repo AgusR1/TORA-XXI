@@ -330,7 +330,6 @@ const MenuProblema = () => {
                 let minD = null;//aqui se almacenara el valor mas chico
                 let minO = null;//aqui se almacenara el valor mas chico
                 let minO2 = null;//aqui se alamecenara el segundo valor mas chico
-                let i=0;
                 do {
                     //debo determinar la penalizacion
                     for (let i = 0; i < VmatrizCostes.length; i++) {
@@ -342,7 +341,7 @@ const MenuProblema = () => {
                         switch (posDestino) {
                             case 0:
                                 demanda = VtablaDemandas[VtablaDemandas.length - 1];
-                                posDeposito = Math.ceil((i + 1) / VtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
+                                posDeposito = Math.ceil((i + 1) / VtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 y length=3 => 4/3 round up es 2
                                 oferta = VtablaOfertas[posDeposito - 1];
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
                                 //codigo que encuentra los dos costos menores y calcula las penalizaciones para cada oferta y demanda
@@ -441,7 +440,7 @@ const MenuProblema = () => {
                                 break;
                         }
                     }
-                    //debo encontrar la mayor penalizacion
+                    //debo encontrar la mayor penalizacion y asignar los recursos
                     let maxPenDemanda;
                     let maxPenOferta;
                     let maxPen;
@@ -451,27 +450,32 @@ const MenuProblema = () => {
                     let deposito;
                     let minCost=null;
                     let costIndex;
-                    maxPenDemanda=Math.max(...penalizacionDemandas);
-                    maxPenOferta=Math.max(...penalizacionOfertas);
-                    if(maxPenDemanda>maxPenOferta){
-                        maxPen=maxPenDemanda;
-                        indice = penalizacionDemandas.indexOf(Math.max(...penalizacionDemandas));
-                        demanda=VtablaDemandas[indice];
-                        for (let i = 0; i < VmatrizCostes.length; i++) {
-                            if(i+1%indice+1===0){
-                                if(minCost===null){
-                                    minCost=VmatrizCostes[i];
-                                    costIndex=i;
-                                }else{
-                                    if(VmatrizCostes[i]<=minCost){
-                                        minCost = VmatrizCostes[i];
-                                        costIndex=i;
+                    maxPenDemanda=Math.max(...penalizacionDemandas);//obtengo el maximo del array de penalizaciones de demandas
+                    maxPenOferta=Math.max(...penalizacionOfertas);//obtengo el maximo del array de penalizaciones de ofertas
+                    if(maxPenDemanda>maxPenOferta){//comparo cual de los dos es mayor, el que sea mayor sera el que se utilizara
+                        maxPen=maxPenDemanda;//si la penalizacion de demanda es la mayor entonces la asigno como penalizacion mayor absoluta
+                        indice = penalizacionDemandas.indexOf(Math.max(...penalizacionDemandas));//obtengo el indice de dicha penalizacion maxima, este indice de penalizacion es igual al numero de indice que indica que numero de destino corresponde
+                        demanda=VtablaDemandas[indice];//obtengo la demanda del destino con mayor penalizacion
+                        for (let i = 0; i < VmatrizCostes.length; i++) {//recorro la matriz de costes
+                            let posDestino;
+                            posDestino = parseInt(i + 1) % VtablaDemandas.length;//variable que determina a que destino corresponde el actual valor del iterador
+                            if (posDestino===indice+1) {//compruebo si la posicion del destino corresponde con el numero de destino donde se encuentra la penalizacion mayor
+
+                                //busco el menor costo dentro de los costos asignados a ese destino exlusivamente
+                                if (minCost === null) {
+                                    minCost = VmatrizCostes[i];//guardo el minimo costo
+                                    costIndex = i;//guardo a que indice dentro de la matriz de costos corresponde el menor costo, para mas tarde determinar de que deposito es
+                                } else {
+                                    if (VmatrizCostes[i] <= minCost) {
+                                        minCost = VmatrizCostes[i];//guardo el minimo costo
+                                        costIndex = i;//guardo a que indice dentro de la matriz de costos corresponde el menor costo, para mas tarde determinar de que deposito es
                                     }
                                 }
                             }
                         }
                         deposito = Math.ceil((costIndex + 1) / VtablaDemandas.length);
                         oferta=VtablaOfertas[deposito-1];
+                        //realizo la asignacion de recursos una vez determinadas todas las variables
                         if (oferta>demanda) {
                             VtablaDemandas[indice]=0;
                             VtablaOfertas[deposito-1]=oferta-demanda;
@@ -497,9 +501,10 @@ const MenuProblema = () => {
                         }
                     }else{
                         maxPen=maxPenOferta;
+                        indice = penalizacionOfertas.indexOf(Math.max(...penalizacionOfertas));
+                        oferta=VtablaOfertas[indice];
                     }
-                    i++;
-                } while (i < 10);
+                } while (VsumaDemanda>0);
                 break;
             default:
 
