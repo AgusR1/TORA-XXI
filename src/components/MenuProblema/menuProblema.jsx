@@ -293,6 +293,7 @@ const MenuProblema = () => {
                 let maximosOfertas = [];//en este array se guardaran los valores que sean el segundo mas bajo encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que deposito corresponden
                 let minimosDemandas = [];//en este array se guardaran los valores minimos encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que cliente corresponden
                 let minimosOfertas = [];//en este array se guardaran los valores minimos encontrados que se utilizaran para calcular las penalizaciones, donde el numero de indice que ocupen indicara a que deposito corresponden
+
                 for (let i = 0; i < demandasRef.current.length; i++) {
                     //paso los valores del input a un array donde manipularlos
                     VtablaDemandas[i] = parseFloat(demandasRef.current[i].value, 2);
@@ -326,10 +327,15 @@ const MenuProblema = () => {
                         VmatrizCostes.splice((indices[i] + 1), 0, 0);
                     }
                 }
-                let minD2 = null;//aqui se alamecenara el segundo valor mas chico
-                let minD = null;//aqui se almacenara el valor mas chico
-                let minO = null;//aqui se almacenara el valor mas chico
-                let minO2 = null;//aqui se alamecenara el segundo valor mas chico
+                for (let i = 0; i < VtablaDemandas.length; i++) {
+                    maximosDemandas[i] = null;
+                    minimosDemandas[i] = null;
+                }
+                for (let i = 0; i < VtablaOfertas.length; i++) {
+                    maximosOfertas[i] = null;
+                    minimosOfertas[i] = null;
+                }   
+                let i=0;
                 do {
                     //debo determinar la penalizacion
                     for (let i = 0; i < VmatrizCostes.length; i++) {
@@ -346,100 +352,93 @@ const MenuProblema = () => {
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
                                 //codigo que encuentra los dos costos menores y calcula las penalizaciones para cada oferta y demanda
                                 if (demanda !== 0 && oferta!==0) {
-                                    if (minD !== null) {
-                                        if (VmatrizCostes[i] <= minD) {
-                                            minD = VmatrizCostes[i];
-                                            minimosDemandas[VtablaDemandas.length - 1] = minD;
+                                    if (minimosDemandas[VtablaDemandas.length - 1] !== null) {
+                                        if (VmatrizCostes[i] <= minimosDemandas[VtablaDemandas.length - 1]) {
+                                            minimosDemandas[VtablaDemandas.length - 1] = VmatrizCostes[i];
                                         }else{
-                                            if (minD2 !== null) {
-                                                if (VmatrizCostes[i] <= minD2) {
-                                                    minD2 = VmatrizCostes[i];
-                                                    maximosDemandas[VtablaDemandas.length - 1] = minD2;
+                                            if (maximosDemandas[VtablaDemandas.length - 1] !== null) {
+                                                if (VmatrizCostes[i] <= maximosDemandas[VtablaDemandas.length - 1]) {
+                                                    maximosDemandas[VtablaDemandas.length - 1] = VmatrizCostes[i];
                                                 }
                                             } else {
-                                                minD2 = VmatrizCostes[i];
-                                                maximosDemandas[VtablaDemandas.length - 1] = minD2;
+                                                maximosDemandas[VtablaDemandas.length - 1] = VmatrizCostes[i];
                                             }
                                         }
                                     }else{
-                                        minD = VmatrizCostes[i];
-                                        minimosDemandas[VtablaDemandas.length - 1] = minD;
+                                        minimosDemandas[VtablaDemandas.length - 1] = VmatrizCostes[i];
                                     }
-                                    penalizacionDemandas[VtablaDemandas.length - 1] = minD2 - minD;
-                                    if (minO !== null) {
-                                        if (VmatrizCostes[i] <= minO) {
-                                            minO = VmatrizCostes[i];
-                                            minimosOfertas[posDeposito - 1] = minO;
+                                    if (minimosOfertas[posDeposito - 1] !== null) {
+                                        if (VmatrizCostes[i] <= minimosOfertas[posDeposito - 1]) {
+                                            minimosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                         } else {
-                                            if (minO2 !== null) {
-                                                if (VmatrizCostes[i] <= minO2) {
-                                                    minO2 = VmatrizCostes[i];
-                                                    maximosOfertas[posDeposito - 1] = minO2;
+                                            if (maximosOfertas[posDeposito - 1] !== null) {
+                                                if (VmatrizCostes[i] <= maximosOfertas[posDeposito - 1]) {
+                                                    maximosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                                 }
                                             } else {
-                                                minO2 = VmatrizCostes[i];
-                                                maximosDemandas[posDeposito - 1] = minO2;
+                                                maximosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                             }
                                         }
                                     } else {
-                                        minO = VmatrizCostes[i];
-                                        minimosDemandas[VtablaDemandas.length - 1] = minO;
+                                        minimosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                     }
-                                    penalizacionOfertas[posDeposito - 1]=minO2-minO;
                                 }
                                 break;
                             default:
                                 demanda = VtablaDemandas[posDestino - 1];
-                                posDeposito = Math.ceil((i + 1) / ENtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
-                                oferta = ENtablaOfertas[posDeposito - 1];
+                                posDeposito = Math.ceil((i + 1) / VtablaDemandas.length);//para determinar que oferta disponible tiene este cliente con este costo asociado necesito realizar la siguiente operacion matematica que me devuelva el numero de fila al que corresponde ej pos=1 y length=3 => 1/3 redondeado hacia arriba me devuelve 1 o pos=4 7 length=3 => 4/3 round up es 2
+                                oferta = VtablaOfertas[posDeposito - 1];
                                 //ya tenemos el costo minimo, la oferta y la demanda correspondiente para dicho costo, ahora se asignan los recursos
 
                                 //codigo que encuentra los dos costos menores y calcula las penalizaciones para cada oferta y demanda
                                 if (demanda !== 0 && oferta !== 0) {
-                                    if (minD !== null) {
-                                        if (VmatrizCostes[i] <= minD) {
-                                            minD = VmatrizCostes[i];
-                                            minimosDemandas[posDestino - 1] = minD;
+                                    if (minimosDemandas[posDestino - 1] !== null) {
+                                        if (VmatrizCostes[i] <= minimosDemandas[posDestino - 1]) {
+                                            minimosDemandas[posDestino - 1] = VmatrizCostes[i];
                                         } else {
-                                            if (minD2 !== null) {
-                                                if (VmatrizCostes[i] <= minD2) {
-                                                    minD2 = VmatrizCostes[i];
-                                                    maximosDemandas[posDestino - 1] = minD2;
+                                            if (maximosDemandas[posDestino - 1] !== null) {
+                                                if (VmatrizCostes[i] <= maximosDemandas[posDestino - 1]) {
+                                                    maximosDemandas[posDestino - 1] = VmatrizCostes[i];
                                                 }
                                             } else {
-                                                minD2 = VmatrizCostes[i];
-                                                maximosDemandas[posDestino - 1] = minD2;
+                                                maximosDemandas[posDestino - 1] = VmatrizCostes[i];
                                             }
                                         }
                                     } else {
-                                        minD = VmatrizCostes[i];
-                                        minimosDemandas[posDestino - 1] = minD;
+                                        minimosDemandas[posDestino - 1] = VmatrizCostes[i];
                                     }
-                                    penalizacionDemandas[posDestino - 1] = minD2 - minD;
-                                    if (minO !== null) {
-                                        if (VmatrizCostes[i] <= minO) {
-                                            minO = VmatrizCostes[i];
-                                            minimosOfertas[posDeposito - 1] = minO;
+                                    if (minimosOfertas[posDeposito - 1] !== null) {
+                                        if (VmatrizCostes[i] <= minimosOfertas[posDeposito - 1]) {
+                                            minimosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                         } else {
-                                            if (minO2 !== null) {
-                                                if (VmatrizCostes[i] <= minO2) {
-                                                    minO2 = VmatrizCostes[i];
-                                                    maximosOfertas[posDeposito - 1] = minO2;
+                                            if (maximosOfertas[posDeposito - 1] !== null) {
+                                                if (VmatrizCostes[i] <= maximosOfertas[posDeposito - 1]) {
+                                                    maximosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                                 }
                                             } else {
-                                                minO2 = VmatrizCostes[i];
-                                                maximosDemandas[posDeposito - 1] = minO2;
+                                               maximosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                             }
                                         }
                                     } else {
-                                        minO = VmatrizCostes[i];
-                                        minimosDemandas[posDestino - 1] = minO;
+                                        minimosOfertas[posDeposito - 1] = VmatrizCostes[i];
                                     }
-                                    penalizacionOfertas[posDeposito - 1] = minO2 - minO;
                                 }
                                 break;
                         }
                     }
+                    for (let i = 0; i < minimosDemandas.length; i++) {
+                        penalizacionDemandas[i]=maximosDemandas[i]-minimosDemandas[i];
+                    }
+                    for (let i = 0; i < minimosOfertas.length; i++) {
+                        penalizacionOfertas[i]=maximosOfertas[i]-minimosOfertas[i];
+                    }
+                    console.log("minimos demandas: "+minimosDemandas);
+                    console.log("maximos demandas: "+maximosDemandas);
+                    console.log("penalizaciones demandas: "+penalizacionDemandas);
+                    console.log("**********************************************");
+                    console.log("minimos ofertas: " + minimosOfertas);
+                    console.log("maximos ofertas: "+maximosOfertas);
+                    console.log("penalizaciones oferta: "+penalizacionOfertas);
                     //debo encontrar la mayor penalizacion y asignar los recursos
                     let maxPenDemanda;
                     let maxPenOferta;
@@ -506,10 +505,9 @@ const MenuProblema = () => {
                         maxPen=maxPenOferta;
                         indice = penalizacionOfertas.indexOf(maxPen);
                         oferta=VtablaOfertas[indice];
-                        for (let i = 0; i < matrizCostes.length; i++) {
-                            let posDeposito;
-                            posDeposito = Math.ceil((i + 1) / tablaDemandas.length);
-                            if(posDeposito===indice+1){
+                        for (let i = 0; i < VmatrizCostes.length; i++) {
+                            deposito = Math.ceil((i + 1) / VtablaDemandas.length);
+                            if(deposito===indice+1){
                                 if (minCost === null) {
                                     minCost = VmatrizCostes[i];//guardo el minimo costo
                                     costIndex = i;//guardo a que indice dentro de la matriz de costos corresponde el menor costo, para mas tarde determinar de que deposito es
@@ -521,10 +519,36 @@ const MenuProblema = () => {
                                 } 
                             }
                         }
-                        deposito = Math.ceil((costIndex + 1) / VmatrizCostes.length);
-                        oferta = VtablaOfertas[deposito - 1];
+                        deposito = parseInt(costIndex + 1) % VtablaDemandas.length;
+                        demanda = VtablaDemandas[deposito - 1];
+                        if (oferta > demanda) {
+                            VtablaDemandas[indice] = 0;
+                            VtablaOfertas[deposito - 1] = oferta - demanda;
+                            VcostoTotal = VcostoTotal + demanda * VmatrizCostes[costIndex];
+                            VsumaDemanda = VsumaDemanda - demanda;
+                            VsumaOferta = VsumaOferta - demanda;
+                            setMinCostos(cost => [...cost, VmatrizCostes[costIndex]]);
+                            setListaOfertas(listaO => [...listaO, demanda]);
+                            setListaFuentes(listaF => [...listaF, fuentesRef.current[deposito - 1].value]);
+                            setListaDemandas(listaD => [...listaD, demanda]);
+                            setListaClientes(listaC => [...listaC, destinosRef.current[indice].value]);
+                        } else {
+                            VtablaOfertas[deposito - 1] = 0;
+                            VtablaDemandas[indice] = demanda - oferta;
+                            VcostoTotal = VcostoTotal + oferta * VmatrizCostes[costIndex];
+                            VsumaDemanda = VsumaDemanda - oferta;
+                            VsumaOferta = VsumaOferta - oferta;
+                            setMinCostos(cost => [...cost, VmatrizCostes[costIndex]]);
+                            setListaOfertas(listaO => [...listaO, oferta]);
+                            setListaFuentes(listaF => [...listaF, fuentesRef.current[deposito - 1].value]);
+                            setListaDemandas(listaD => [...listaD, demanda]);
+                            setListaClientes(listaC => [...listaC, destinosRef.current[indice].value]);
+                        }
                     }
-                } while (VsumaDemanda>0);
+                    i++
+                } while (i<1);
+                setCostoTotal(VcostoTotal);
+                setPantalla("solucion");
                 break;
             default:
                 break;
